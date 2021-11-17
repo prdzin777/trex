@@ -1,0 +1,15 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  /*margin-left: auto;
+  margin-right: auto;*/
+}
+canvas {
+  display: block;
+  /*margin-left: auto;
+  margin-right: auto;
+  margin-top: 25%;
+  margin-bottom: auto;*/
+
+  
+}
