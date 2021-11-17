@@ -110,7 +110,7 @@ function draw() {
     //trex.velocityY = -10;
     //somSalto.play();
     if (tempoSomFim > 0) {
-      somFim.play();
+      //somFim.play();
       //console.log(tempoSomFim);
     }
   }
