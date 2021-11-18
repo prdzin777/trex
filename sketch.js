@@ -37,19 +37,21 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(600, 200);
+  
+  createCanvas(windowWidth, 200);//windowHeight
+  //height, width -> essas são criadas junto ao canvas e armazenam a altura e largura, respectivamente do canvas
 
   //criar grupos para as nuvens e obstáculos:
   grupoNuvens = createGroup();
   grupoObstaculos = createGroup();
 
   //texto de Fim de jogo:
-  fimDeJogo = createSprite(300, 100);
+  fimDeJogo = createSprite(width/2, 100);
   fimDeJogo.addImage(fimimg);
   fimDeJogo.scale = 0.5;
   fimDeJogo.visible = false;
 
-  restart = createSprite(300, 150);
+  restart = createSprite(width/2, 150);
   restart.addImage(restartimg);
   restart.scale = 0.5;
   restart.visible = false;
@@ -114,8 +116,9 @@ function draw() {
       //console.log(tempoSomFim);
     }
   }
-  if(mousePressedOver(restart)){
+  if((mousePressedOver(restart)|| touches.length >0)){
     //console.log("reiniciar o jogo");
+    touches = [];
     reset();
   }
 
@@ -127,13 +130,13 @@ function draw() {
   
 
   //controle de salto do trex
-  if (keyDown("space") && trex.y >= 160) {
+  if ((keyDown("space")|| touches.length >0)&& trex.y >= 160) {
     trex.velocityY = -10;
     somSalto.play();
   }
   //gravidade
   trex.velocityY = trex.velocityY + delGrav;
-
+  console.log(touches)
   //colisao com o soloinvisivel
   trex.collide(soloinvisivel);
   soloinvisivel.visible = false;
@@ -144,7 +147,7 @@ function draw() {
   }
 
   drawSprites();
-  text("Pontuação: " + pontuacao + " seg", 450, 20);
+  text("Pontuação: " + pontuacao + " seg", width*0.9, 20);
 }
 
 function reset(){
@@ -167,7 +170,7 @@ function reset(){
 }
 function geranuvem() {
   if (frameCount % 60 === 0) {
-    var nuvem = createSprite(601, 150, 40, 10);
+    var nuvem = createSprite(width+1, 150, 40, 10);
     nuvem.velocityX = -3;
 
     //tempo de vida:
@@ -195,7 +198,7 @@ function geranuvem() {
 
 function geraObstaculos() {
   if (frameCount % 60 === 0) {
-    var obstaculo = createSprite(600, 178, 10, 40);
+    var obstaculo = createSprite(width+1, 178, 10, 40);
     obstaculo.velocityX = solo.velocityX;
 
     var tipoObstaculo = Math.round(random(1, 6));
@@ -225,7 +228,7 @@ function geraObstaculos() {
     //obstaculo.debug = true;
     obstaculo.lifetime = Math.abs(width / obstaculo.velocityX);
     grupoObstaculos.add(obstaculo);
-    
+    obstaculo.depth = restart.depth-1;
   }
   
   
